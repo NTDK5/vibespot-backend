@@ -1,0 +1,93 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  // output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  
+}
+
+enum UserRole {
+  user
+  superadmin
+}
+
+enum SpotCategory {
+  photo_spot
+  activity
+  gallery
+  workspace
+  restaurant
+}
+
+enum PriceRange {
+  free
+  low
+  medium
+  high
+}
+
+enum SpotStatus {
+  pending
+  approved
+  rejected
+}
+
+/* ===========================
+   MODELS
+=========================== */
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  role         UserRole @default(user)
+  profileImage String?
+  interests    String[] @default([])
+  password     String
+  // Array of saved spot IDs (not relation)
+  savedSpots  String[] @default([])
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relation: User → Spots they created
+  spots       Spot[]  @relation("UserSpots")
+  refreshTokenHash String? 
+}
+
+model Spot {
+  id          String         @id @default(cuid())
+  title       String
+  description String
+  category    SpotCategory
+  address     String
+
+  lat         Float
+  lng         Float
+
+  images      String[]       @default([])
+  thumbnail   String?
+  priceRange  PriceRange
+  tags        String[]       @default([])
+
+  bestTime    String?
+  status      SpotStatus    @default(pending)
+
+  // Relation: createdBy → user.id
+  createdBy   String
+  creator     User           @relation("UserSpots", fields: [createdBy], references: [id])
+
+  ratingAvg   Float          @default(0)
+  ratingCount Int            @default(0)
+
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+}
