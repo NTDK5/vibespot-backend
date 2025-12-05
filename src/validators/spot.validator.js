@@ -7,15 +7,15 @@ export const createSpotSchema = Joi.object({
     category: Joi.string().valid("photo_spot", "activity", "gallery", "workspace", "restaurant").required(),
     address: Joi.string().required(),
     location: Joi.object({
-    lat: Joi.number().required(),
-    lng: Joi.number().required(),
-    }).required(),
+    lat: Joi.number().optional(),
+    lng: Joi.number().optional(),
+    }).optional(),
     images: Joi.array().items(Joi.string().uri()).optional(),
     thumbnail: Joi.string().uri().optional(),
     priceRange: Joi.string().valid("free", "low", "medium", "high").required(),
     tags: Joi.array().items(Joi.string()).optional(),
     bestTime: Joi.string().optional(),
-    createdBy: Joi.string().required(),
+    createdBy: Joi.string().optional(),
     });
     
     
@@ -35,3 +35,9 @@ export    const updateSpotSchema = Joi.object({
     bestTime: Joi.string().optional(),
     status: Joi.string().valid("pending", "approved", "rejected").optional(),
     });
+
+export const rateSpotSchema = Joi.object({
+    rating: Joi.number().min(1).max(5).required(),
+    userId: Joi.string().required()
+});
+      

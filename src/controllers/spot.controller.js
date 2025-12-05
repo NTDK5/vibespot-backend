@@ -6,18 +6,29 @@
     createSpot,
     getSpotById,
     getAllSpots,
-    getSpotsByUser,
     updateSpot,
     deleteSpot,
-    approveSpot,
-    rejectSpot,
     rateSpot,
   } from "../services/spot.service.js";
   
   export const createSpotController = async (req, res, next) => {
     try {
-      req.body.createdBy = req.user?.id || req.body.createdBy;
-      const spot = await createSpot(req.body);
+      const data = req.body;
+  
+      // Map optional location
+      if (data.location) {
+        if (data.location.lat !== undefined) data.lat = data.location.lat;
+        if (data.location.lng !== undefined) data.lng = data.location.lng;
+        delete data.location;
+      }
+  
+      // TEMP: allow createdBy to be optional
+      if (!data.createdBy) {
+        // for testing only, assign a dummy user id
+        data.createdBy = "cmiq18cgx0000ik7krdv7qtg7";
+      }
+  
+      const spot = await createSpot(data);
       res.status(201).json(spot);
     } catch (error) {
       next(error);
@@ -42,14 +53,14 @@
     }
   };
   
-  export const getSpotsByUserController = async (req, res, next) => {
-    try {
-      const spots = await getSpotsByUser(req.params.userId);
-      res.json(spots);
-    } catch (error) {
-      next(error);
-    }
-  };
+  // export const getSpotsByUserController = async (req, res, next) => {
+  //   try {
+  //     const spots = await getSpotsByUser(req.params.userId);
+  //     res.json(spots);
+  //   } catch (error) {
+  //     next(error);
+  //   }
+  // };
   
   export const updateSpotController = async (req, res, next) => {
     try {

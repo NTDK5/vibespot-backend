@@ -70,8 +70,8 @@ model Spot {
   category    SpotCategory
   address     String
 
-  lat         Float
-  lng         Float
+  lat         Float?
+  lng         Float?
 
   images      String[]       @default([])
   thumbnail   String?
@@ -79,7 +79,7 @@ model Spot {
   tags        String[]       @default([])
 
   bestTime    String?
-  status      SpotStatus    @default(pending)
+  status      SpotStatus?    @default(pending)
 
   // Relation: createdBy → user.id
   createdBy   String

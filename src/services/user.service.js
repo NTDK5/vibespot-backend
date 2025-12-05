@@ -3,9 +3,11 @@
 import { getPrisma } from "../loaders/prisma.js";
 import { hashPassword } from "../utils/auth.js";
 
+
+const prisma = getPrisma(); 
+
 export const createUser = async (data) => {
   // Check duplicate email
-  const prisma = getPrisma(); 
   const existingUser = await prisma.user.findUnique({
     where: { email: data.email },
   });
@@ -31,7 +33,6 @@ export const createUser = async (data) => {
 
 
 export const getUserById = async (id) => {
-  const prisma = getPrisma(); 
   const user = await prisma.user.findUnique({
     where: { id },
   });
@@ -47,7 +48,6 @@ export const getUserById = async (id) => {
 
 
 export const getUserByEmail = async (email) => {
-  const prisma = getPrisma(); 
   return prisma.user.findUnique({
     where: { email },
   });
@@ -55,6 +55,7 @@ export const getUserByEmail = async (email) => {
 
 
 export const getAllUsers = async () => {
+  const prisma = getPrisma();
   return prisma.user.findMany({
     orderBy: { createdAt: "desc" },
   });
@@ -62,7 +63,6 @@ export const getAllUsers = async () => {
 
 
 export const updateUser = async (id, data) => {
-  const prisma = getPrisma(); 
   // Ensure user exists
   const existingUser = await prisma.user.findUnique({
     where: { id },
@@ -96,7 +96,6 @@ export const updateUser = async (id, data) => {
 
 
 export const deleteUser = async (id) => {
-  const prisma = getPrisma(); 
   // Ensure user exists
   const existingUser = await prisma.user.findUnique({
     where: { id },
@@ -119,7 +118,6 @@ export const deleteUser = async (id) => {
 // =============================
 
 export const addSavedSpot = async (userId, spotId) => {
-  const prisma = getPrisma(); 
   const user = await prisma.user.findUnique({
     where: { id: userId },
   });
@@ -149,7 +147,6 @@ export const addSavedSpot = async (userId, spotId) => {
 
 
 export const removeSavedSpot = async (userId, spotId) => {
-  const prisma = getPrisma(); 
   const user = await prisma.user.findUnique({
     where: { id: userId },
   });

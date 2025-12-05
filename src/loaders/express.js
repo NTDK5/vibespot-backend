@@ -14,7 +14,7 @@ import { globalRateLimiter, loginRateLimiter } from "../middlewares/rateLimiter.
 // import { prefix } from "../../config/index.js";
 import authRoutes from "../routes/auth.route.js";
 import userRoutes from "../routes/user.route.js"
-
+import spotRoutes from '../routes/spot.route.js'
 
 
 export default (app) => {
@@ -78,6 +78,7 @@ export default (app) => {
   // app.use(prefix, routes);
   app.use("/api/auth", authRoutes);
   app.use("/api/user", userRoutes);
+  app.use('/api/spot', spotRoutes);
   // =============================
   // 404 Handler
   // =============================
