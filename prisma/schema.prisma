@@ -74,6 +74,7 @@ model Spot {
   lng         Float?
 
   images      String[]       @default([])
+  publicIds   String[] @default([])
   thumbnail   String?
   priceRange  PriceRange
   tags        String[]       @default([])

@@ -20,8 +20,8 @@ router.get("/:id", getUserByIdController);
 router.put("/:id", validate(updateUserSchema), updateUserController);
 router.delete("/:id", deleteUserController);
 
-// Saved places
-router.post("/:id/saved-places", addSavedSpotController);
-router.delete("/:id/saved-places", removeSavedSpotController);
+// Saved spots
+router.post("/:id/saved-spots", addSavedSpotController);
+router.delete("/:id/saved-spots", removeSavedSpotController);
 
 export default router;

@@ -10,7 +10,10 @@
     deleteSpot,
     rateSpot,
   } from "../services/spot.service.js";
-  
+  import cloudinary from "../config/cloudinary.js";
+
+
+
   export const createSpotController = async (req, res, next) => {
     try {
       const data = req.body;
@@ -19,7 +22,9 @@
       if (data.location) {
         if (data.location.lat !== undefined) data.lat = data.location.lat;
         if (data.location.lng !== undefined) data.lng = data.location.lng;
+        console.log(data.location)
         delete data.location;
+        
       }
   
       // TEMP: allow createdBy to be optional
@@ -27,7 +32,15 @@
         // for testing only, assign a dummy user id
         data.createdBy = "cmiq18cgx0000ik7krdv7qtg7";
       }
-  
+
+        // === NEW: handle images ===
+      if (req.files && req.files.length > 0) {
+        data.images = req.files.map(f => f.path);  // Cloudinary image URLs
+        data.publicIds = req.files.map(f => f.filename); // IMPORTANT
+        data.thumbnail = req.files[0].path; 
+        console.log(data.images)// first image as thumbnail
+      }
+      console.log(req.files)
       const spot = await createSpot(data);
       res.status(201).json(spot);
     } catch (error) {
@@ -63,31 +76,59 @@
   // };
   
   export const updateSpotController = async (req, res, next) => {
-    try {
-      const updated = await updateSpot(req.params.id, req.body);
-      res.json(updated);
-    } catch (error) {
-      next(error);
-    }
-  };
+      try {
+          const spotId = req.params.id;
+          const existing = await getSpotById(spotId);
+
+          const data = req.body;
+
+          // If new images uploaded → respot old images
+          if (req.files && req.files.length > 0) {
+
+            // 1. Delete old Cloudinary images
+            if (existing.publicIds && existing.publicIds.length > 0) {
+              for (const id of existing.publicIds) {
+                await cloudinary.uploader.destroy(id);
+              }
+            }
+
+            // 2. Add new image URLs + publicIds
+            data.images = req.files.map(f => f.path);
+            data.publicIds = req.files.map(f => f.filename);
+            data.thumbnail = req.files[0].path;  
+          }
+
+          const updated = await updateSpot(spotId, data);
+          res.json(updated);
+
+      } catch (error) {
+        next(error);
+      }
+
+};
   
-  export const deleteSpotController = async (req, res, next) => {
-    try {
-      const deleted = await deleteSpot(req.params.id);
-      res.json(deleted);
-    } catch (error) {
-      next(error);
-    }
-  };
-  
-  export const approveSpotController = async (req, res, next) => {
-    try {
-      const updated = await approveSpot(req.params.id);
-      res.json(updated);
-    } catch (error) {
-      next(error);
-    }
-  };
+    export const deleteSpotController = async (req, res, next) => {
+      try {
+        const spotId = req.params.id;
+        const spot = await getSpotById(spotId);
+
+        // Delete Cloudinary images
+        if (spot.publicIds && spot.publicIds.length > 0) {
+          for (const id of spot.publicIds) {
+            await cloudinary.uploader.destroy(id);
+          }
+        }
+
+        // Delete from DB
+        await deleteSpot(spotId);
+
+        res.json({ message: "Spot deleted successfully" });
+
+      } catch (error) {
+        next(error);
+      }
+    };
+
   
   export const rejectSpotController = async (req, res, next) => {
     try {

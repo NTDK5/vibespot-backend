@@ -69,6 +69,8 @@ export const getAllSpots = async (filters = {}) => {
 --------------------------------------------- */
 
 export const updateSpot = async (id, data) => {
+  const prisma = getPrisma();
+
   const spot = await prisma.spot.findUnique({ where: { id } });
   if (!spot) throwErr("Spot not found", 404);
 

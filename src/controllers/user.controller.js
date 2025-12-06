@@ -93,7 +93,7 @@ import {
   
   export const addSavedSpotController = async (req, res, next) => {
     try {
-      const updated = await addSavedSpot(req.params.id, req.body.placeId);
+      const updated = await addSavedSpot(req.params.id, req.body.spotId);
       res.json(updated);
     } catch (error) {
       next(error);
@@ -102,7 +102,7 @@ import {
   
   export const removeSavedSpotController = async (req, res, next) => {
     try {
-      const updated = await removeSavedSpot(req.params.id, req.body.placeId);
+      const updated = await removeSavedSpot(req.params.id, req.body.spotId);
       res.json(updated);
     } catch (error) {
       next(error);
