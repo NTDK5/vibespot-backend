@@ -1,6 +1,5 @@
 import { getPrisma } from "../loaders/prisma.js";
 
-const prisma = getPrisma();
 
 /* --------------------------------------------
    Helpers
@@ -37,6 +36,7 @@ export const createSpot = async (data) => {
 --------------------------------------------- */
 
 export const getSpotById = async (id) => {
+  const prisma = getPrisma();
   const spot = await prisma.spot.findUnique({ where: { id } });
   if (!spot) throwErr("Spot not found", 404);
   return spot;
@@ -47,6 +47,7 @@ export const getSpotById = async (id) => {
 --------------------------------------------- */
 
 export const getAllSpots = async (filters = {}) => {
+  const prisma = getPrisma();
   return prisma.spot.findMany({
     where: filters,
     orderBy: { createdAt: "desc" },
@@ -85,6 +86,7 @@ export const updateSpot = async (id, data) => {
 --------------------------------------------- */
 
 export const deleteSpot = async (id) => {
+  const prisma = getPrisma();
   const existing = await prisma.spot.findUnique({ where: { id } });
   if (!existing) throwErr("Spot not found", 404);
 

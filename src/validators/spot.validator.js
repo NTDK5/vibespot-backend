@@ -16,6 +16,7 @@ export const createSpotSchema = Joi.object({
     tags: Joi.array().items(Joi.string()).optional(),
     bestTime: Joi.string().optional(),
     createdBy: Joi.string().optional(),
+    features: Joi.array().items(Joi.string()).optional(),
     });
     
     

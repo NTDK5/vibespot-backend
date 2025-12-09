@@ -25,6 +25,10 @@ enum SpotCategory {
   gallery
   workspace
   restaurant
+  art
+  sports
+  entertainment
+  nature
 }
 
 enum PriceRange {
@@ -78,7 +82,7 @@ model Spot {
   thumbnail   String?
   priceRange  PriceRange
   tags        String[]       @default([])
-
+  features    String[]       @default([])
   bestTime    String?
   status      SpotStatus?    @default(pending)
 
