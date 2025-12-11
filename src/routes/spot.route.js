@@ -13,9 +13,10 @@ import {
   getSpotByIdController,
   updateSpotController,
   deleteSpotController,
-  rateSpotController
+  rateSpotController,
+  getNearbySpots
 } from "../controllers/spot.controller.js";
-
+import { requireAuth } from "../middlewares/auth.js";
 import { updateSpot } from "../services/spot.service.js";
 const router = Router();
 
@@ -24,6 +25,8 @@ router.post("/", validate(createSpotSchema), upload.array("images", 5),  createS
 
 // Get All Spots
 router.get("/", getAllSpotsController);
+
+router.get('/nearby', getNearbySpots )
 
 // Get One Spot
 router.get("/:id", getSpotByIdController);
@@ -65,5 +68,4 @@ router.post("/:id/images", upload.array("images", 10), async (req, res, next) =>
 
 // Rate Spot
 router.post("/:id/rate", validate(rateSpotSchema), rateSpotController);
-
 export default router;

@@ -6,10 +6,8 @@ export const createSpotSchema = Joi.object({
     description: Joi.string().required(),
     category: Joi.string().valid("photo_spot", "activity", "gallery", "workspace", "restaurant").required(),
     address: Joi.string().required(),
-    location: Joi.object({
     lat: Joi.number().optional(),
     lng: Joi.number().optional(),
-    }).optional(),
     images: Joi.array().items(Joi.string().uri()).optional(),
     thumbnail: Joi.string().uri().optional(),
     priceRange: Joi.string().valid("free", "low", "medium", "high").required(),

@@ -16,6 +16,7 @@ const throwErr = (msg, status = 400) => {
 --------------------------------------------- */
 
 export const createSpot = async (data) => {
+  try{
   const prisma = getPrisma();
 
   // 2. Prevent exact duplicate spot (title + address)
@@ -29,6 +30,9 @@ export const createSpot = async (data) => {
 
   // 3. Create new spot
   return prisma.spot.create({ data });
+  }catch (error) {
+    next(error);
+  }
 };
 
 /* --------------------------------------------
