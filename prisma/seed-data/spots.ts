@@ -158,6 +158,40 @@ const spots =
             updatedAt: new Date("2025-12-15T07:38:53.777Z"),
             tags: ["workspace", "cafe", "remote work", "wifi"]
           },
+          {
+            id: "cmj6t8s0l00009o7kfl3hqf8g",
+            title: "Unity Park",
+            description: "Unity Park is a large-scale cultural, historical, and recreational destination located within the National Palace grounds in Addis Ababa. The park was developed to preserve and showcase Ethiopia’s rich heritage while providing a peaceful green space in the middle of the city. Visitors can explore beautifully landscaped gardens, restored historical buildings, museums, and exhibition areas that tell stories of Ethiopia’s monarchy, traditions, and modern development. The park offers a unique opportunity to learn, relax, and connect with Ethiopian identity in one location. Unity Park is suitable for individuals, families, tourists, and school groups, offering a balanced experience of education and leisure. The environment is well-organized, clean, and secure, making it ideal for long walks, photography, and guided tours.",
+            category: "activity",
+            address: "National palace, Arat Kilo, Addis Ababa",
+            lat: 9.015507967763435,
+            lng: 38.78759790211916,
+            images: [
+              "https://res.cloudinary.com/dcnexryxw/image/upload/v1765782382/vibespot/ymb43y4bslq6ansvshhk.jpg",
+              "https://res.cloudinary.com/dcnexryxw/image/upload/v1765782382/vibespot/ffm7k27eek1lpcbu9hto.jpg",
+              "https://res.cloudinary.com/dcnexryxw/image/upload/v1765782382/vibespot/ucs1dhoyev3dgpz0cpru.jpg",
+              "https://res.cloudinary.com/dcnexryxw/image/upload/v1765782382/vibespot/s2jds7tjgatdoxf8zgzr.jpg"
+            ],
+            thumbnail: "https://res.cloudinary.com/dcnexryxw/image/upload/v1765782382/vibespot/ymb43y4bslq6ansvshhk.jpg",
+            priceRange: "low",
+            tags: ["Nature","sunset","photography hiking","view point"],
+            bestTime: "Morning",
+            createdBy: "cmiq18cgx0000ik7krdv7qtg7",
+            ratingAvg: 0,
+            ratingCount: 0,
+            createdAt: new Date("2025-12-15T07:06:29.973Z"),
+            updatedAt: new Date("2025-12-15T07:06:33.124Z"),
+            features: [
+              "Extensive landscape gardens with walking and resting areas",
+              "Cultural museums showcasting Ethiopian history and heritage",
+              "Educational exhibition halls with curated information.",
+              "Restored palace buildings and historical landmarks.",
+              "Family-friendly enviroment suitable for all age groups.",
+              "Professional security and controlled entry",
+              "Guided tour options available for visitors.",
+              "Peaceful atmosphere away from city noise"
+            ]
+          }
           
           
       ]
