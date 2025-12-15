@@ -9,6 +9,7 @@
     updateSpot,
     deleteSpot,
     rateSpot,
+    searchSpots
   } from "../services/spot.service.js";
   import cloudinary from "../config/cloudinary.js";
   import { getPrisma } from "../loaders/prisma.js";
@@ -186,4 +187,11 @@ export const getNearbySpots = async (req, res) => {
   }
 };
 
-  
+export const searchSpotsController = async (req, res, next) => {
+  try {
+    const results = await searchSpots(req.query);
+    res.json(results);
+  } catch (error) {
+    next(error);
+  }
+};

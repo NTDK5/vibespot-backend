@@ -44,6 +44,8 @@
     "winston": "^3.18.3"
   },
   "devDependencies": {
-    "prisma": "^7.0.1"
+    "prisma": "^7.0.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
   }
 }

@@ -14,7 +14,8 @@ import {
   updateSpotController,
   deleteSpotController,
   rateSpotController,
-  getNearbySpots
+  getNearbySpots,
+  searchSpotsController
 } from "../controllers/spot.controller.js";
 import { requireAuth } from "../middlewares/auth.js";
 import { updateSpot } from "../services/spot.service.js";
@@ -25,6 +26,8 @@ router.post("/", validate(createSpotSchema), upload.array("images", 5),  createS
 
 // Get All Spots
 router.get("/", getAllSpotsController);
+// Search Spots
+router.get("/search", searchSpotsController);
 
 router.get('/nearby', getNearbySpots )
 

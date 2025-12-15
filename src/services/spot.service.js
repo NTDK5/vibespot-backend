@@ -173,3 +173,53 @@ export const rateSpot = async (spotId, rating, userId) => {
     },
   });
 };
+/* --------------------------------------------
+   Search Spots
+--------------------------------------------- */
+export const searchSpots = async ({
+  q,
+  category,
+  minRating,
+  priceRange,
+  page = 1,
+  limit = 20,
+}) => {
+  const prisma = getPrisma();
+
+  const where = {
+    AND: [
+      q
+        ? {
+            OR: [
+              { title: { contains: q, mode: "insensitive" } },
+              { description: { contains: q, mode: "insensitive" } },
+              { address: { contains: q, mode: "insensitive" } },
+            ],
+          }
+        : {},
+      category ? { category } : {},
+      minRating ? { ratingAvg: { gte: Number(minRating) } } : {},
+      priceRange ? { priceRange } : {},
+    ],
+  };
+
+  const [data, total] = await Promise.all([
+    prisma.spot.findMany({
+      where,
+      orderBy: { ratingAvg: "desc" },
+      skip: (page - 1) * limit,
+      take: Number(limit),
+    }),
+    prisma.spot.count({ where }),
+  ]);
+
+  return {
+    data,
+    meta: {
+      total,
+      page: Number(page),
+      limit: Number(limit),
+      totalPages: Math.ceil(total / limit),
+    },
+  };
+};
